@@ -1,0 +1,24 @@
+version: '3.6'
+
+networks:
+  default:
+    external:
+        name: network_default
+
+services:
+  stepacard_customer:
+    hostname: customer.stepacard.com
+    container_name: stepacard_customer
+    restart: always
+    expose:
+    - 80
+    image: stepacard/customer:latest
+    build:
+      context: .
+    environment:
+      LETSENCRYPT_HOST: customer.stepacard.com
+      LETSENCRYPT_EMAIL: admin@stepacard.com
+      VIRTUAL_HOST: customer.stepacard.com
+      VIRTUAL_HOST_NAME: "customer"
+    labels:
+    - com.centurylinklabs.watchtower.enable='true'
