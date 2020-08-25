@@ -1,0 +1,22 @@
+version: '3.6'
+
+networks:
+  default:
+    external:
+        name: network_default
+
+services:
+  lowlandtech_customer:
+    hostname: customer.${DOMAIN}
+    container_name: lowlandtech_customer
+    restart: always
+    expose:
+    - 80
+    image: lowlandtech/customer:latest
+    environment:
+      LETSENCRYPT_HOST: customer.${DOMAIN}
+      LETSENCRYPT_EMAIL: ${DOMAIN}
+      VIRTUAL_HOST: customer.${DOMAIN}
+      VIRTUAL_HOST_NAME: "customer"
+    labels:
+    - com.centurylinklabs.watchtower.enable='true'
